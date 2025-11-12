@@ -88,17 +88,18 @@ async def upload_pdf(file: UploadFile = File(...)):
         
         print(f"Received file for indexing: {file.filename}")
         
-        # เรียกใช้ Indexing Pipeline
-        success = rag_pipeline.index_pdf(pdf_bytes, file.filename)
+        # (NEW) รับค่า 2 ตัวจาก rag_pipeline
+        success, metadata = rag_pipeline.index_pdf(pdf_bytes, file.filename)
 
         if success:
             return UploadResponse(
                 success=True,
                 filename=file.filename,
-                message="File processed and indexed successfully."
+                message="File processed and indexed successfully.",
+                extracted_metadata=metadata  # <-- (NEW) ส่ง metadata กลับไป
             )
         else:
-            # ถ้า ocr_service หรือ indexing ล้มเหลว (เช่น OCR ไม่ครบ)
+            # ถ้า ocr_service หรือ indexing ล้มเหลว
             raise HTTPException(status_code=500, detail="Failed to process or index the file.")
 
     except Exception as e:

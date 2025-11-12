@@ -28,3 +28,24 @@ DEFAULT_THAI_CONDENSE_TMPL = (
     "คำถามที่สมบูรณ์: "
 )
 THAI_CONDENSE_TEMPLATE = PromptTemplate(DEFAULT_THAI_CONDENSE_TMPL)
+
+DEFAULT_METADATA_EXTRACTOR_TMPL = (
+    "คุณคือผู้ช่วยอัจฉริยะในการจัดหมวดหมู่เอกสาร"
+    "หน้าที่ของคุณคืออ่านข้อความจากเอกสาร (ซึ่งอาจจะเป็นแค่หน้าแรก) และสกัดข้อมูล metadata ออกมา"
+    "จงตอบกลับเป็น JSON object ที่ถูกต้องเท่านั้น ห้ามมีข้อความอื่นนำหน้าหรือตามหลัง"
+    "ถ้าข้อมูลใดไม่แน่ใจ ให้ใช้ค่า \"Unknown\""
+    "\n"
+    "นี่คือหมวดหมู่ที่กำหนดไว้:"
+    "- doc_type: ประเภทเอกสาร (เช่น \"Policy\", \"Report\", \"Manual\", \"Contract\", \"Memo\", \"Legal\", \"Financial\", \"Unknown\")"
+    "- category: หมวดหมู่เนื้อหา (เช่น \"HR\", \"Finance\", \"Engineering\", \"Sales\", \"IT\", \"Legal\", \"General\", \"Unknown\")"
+    "- status: สถานะเอกสาร (เช่น \"Published\", \"Draft\", \"Archived\", \"Unknown\")"
+    "- title: สรุปชื่อหรือหัวเรื่องของเอกสารนี้ (ไม่เกิน 20 คำ)"
+    "\n"
+    "ข้อความจากเอกสาร:"
+    "---------------------\n"
+    "{context_str}\n"
+    "---------------------\n"
+    "\n"
+    "JSON Output:"
+)
+METADATA_EXTRACTOR_TEMPLATE = PromptTemplate(DEFAULT_METADATA_EXTRACTOR_TMPL)

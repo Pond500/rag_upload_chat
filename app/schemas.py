@@ -1,14 +1,15 @@
 # app/schemas.py (อัปเดต)
 
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 
 # --- สำหรับ Endpoint /upload ---
 class UploadResponse(BaseModel):
     success: bool
     filename: str
     message: str
-
+    extracted_metadata: Optional[Dict[str, Any]] = None
+    
 # --- สำหรับ Endpoint /query (Stateless) ---
 class QueryRequest(BaseModel):
     question: str
@@ -27,3 +28,4 @@ class QueryResponse(BaseModel):
 class ChatRequest(BaseModel):
     question: str
     session_id: str  # เพิ่ม session_id
+
